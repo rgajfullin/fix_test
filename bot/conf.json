@@ -1,0 +1,7 @@
+{
+  "token": "some_token",
+  "chat_id": anychatid,
+  "connection_timeout": 3,
+  "url": "http://www.example.io/",
+  "search_string": "test"
+}
