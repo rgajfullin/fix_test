@@ -4,14 +4,15 @@ import json
 import logging
 import time
 import signal
-with open('conf.json') as config_file:
-    data = json.load(config_file)
+with open('config.json') as config_file:
+    config = json.load(config_file)
 
-token = data['token']
-chat_id = data['chat_id']
-connection_timeout = data['connection_timeout']
-url = data['url']
-search_string = data['search_string']
+token = config['telegram']['token']
+chat_id = config['telegram']['chat_id']
+read_timeout = config['timeout']['read']
+connection_timeout = config['timeout']['connection']
+url = config['service']['url']
+search_string = config['service']['search_string']
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -36,12 +37,16 @@ def send_message(text):
 
 def check_url():
     try:
-        request = requests.get(url, timeout=connection_timeout)
+        request = requests.get(url, timeout=(connection_timeout, read_timeout))
         if request.status_code == 200 and request.text.find(search_string) >= 0:
             return 0
         else:
             send_message(text="{} is broken. {} not found".format(url, search_string))
             return 1
+    except requests.exceptions.ReadTimeout as error:
+        send_message(text="Read timed out")
+        print error
+        return 1
     except requests.exceptions.ConnectTimeout as error:
         send_message(text="Connection timed out")
         print error
@@ -59,7 +64,7 @@ def main():
     starttime = time.time()
     while True:
         if check_url():
-            time.sleep(60) 
+            time.sleep(60)
         if killer.kill_now:
             break
     send_message(text="Monitoring down")
@@ -68,4 +73,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
