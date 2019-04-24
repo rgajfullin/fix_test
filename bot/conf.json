@@ -1,7 +1,14 @@
-{
-  "token": "some_token",
-  "chat_id": anychatid,
-  "connection_timeout": 3,
-  "url": "http://www.example.io/",
-  "search_string": "test"
+{  
+   "telegram":{  
+      "token":"bot_token",
+      "chat_id":chat_id
+   },
+   "service":{  
+      "url":"service url",
+      "search_string":"search string"
+   },
+   "timeout":{  
+      "read":1,
+      "connection":1
+   }
 }
