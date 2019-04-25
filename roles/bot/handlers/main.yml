@@ -1,7 +1,4 @@
 ---
-- name: systemd deamon reload
-  systemd: daemon_reload=yes
-
 - name: Restart telegram monitoring bot
   systemd:
     state: restarted
