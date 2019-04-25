@@ -14,6 +14,16 @@
       skeleton: /etc/skel
       state: present
 
+- name: Install the latest version of pip
+  yum:
+    name:
+      - epel-release
+      - git
+      - python-pip
+    state: latest
+  become: yes
+  become_user: root
+
 - name: Clone the code repository to the user home dir.
   git:
     repo: "https://github.com/rgajfullin/fix_test.git"
@@ -21,15 +31,6 @@
     force: True
   become: yes
   become_user: "{{ user.name }}"
-
-- name: Install the latest version of pip
-  yum:
-    name:
-      - epel-release
-      - python-pip
-    state: latest
-  become: yes
-  become_user: root
 
 - name: Install virtualenv via pip
   pip:
