@@ -63,13 +63,13 @@ def main():
     send_message(text="Monitoring up")
     starttime = time.time()
     while True:
+        time.sleep(1.0 - ((time.time() - starttime) % 1.0))
         if check_url():
             time.sleep(60)
         if killer.kill_now:
             break
     send_message(text="Monitoring down")
     print "Gracefully shutting down."
-    time.sleep(1.0 - ((time.time() - starttime) % 1.0))
-
+    
 if __name__ == '__main__':
     main()
