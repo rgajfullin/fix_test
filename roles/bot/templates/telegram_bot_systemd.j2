@@ -1,0 +1,13 @@
+[Unit]
+Description=telegram url monitoring service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User={{ user.name }}
+Group={{ user.group }}
+WorkingDirectory={{ user.home }}/monitoring_bot/bot/
+ExecStart={{ user.home }}/monitoring_bot/venv/bin/python {{ user.home }}/monitoring_bot/bot/bot.py
+
+[Install]
+WantedBy=multi-user.target

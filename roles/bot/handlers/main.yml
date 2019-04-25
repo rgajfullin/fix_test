@@ -1,0 +1,11 @@
+---
+- name: systemd deamon reload
+  systemd: daemon_reload=yes
+
+- name: Restart telegram monitoring bot
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: telegram-monitoring-bot
+  become: yes
+  become_user: root
