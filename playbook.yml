@@ -1,0 +1,17 @@
+---
+- hosts: all
+  vars:
+      user:
+        name: telegram
+        group: telegram
+        home: /opt/telegram
+        shell: /bin/bash
+      telegram:
+        token:
+        chat_id:
+      service:
+        url:
+        search_string:
+  roles:
+  - role: './roles/bot/'
+
